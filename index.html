@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Vue To Do List</title>
         <!-- Title -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- font-awesome -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -21,26 +26,24 @@
                     <div class="col-12 bg-primary col_css">
 
                         <h1>Lista delle cose da fare</h1>
-
-                        <input v-model="newTodo.text" @keyup.enter="addTodo"
-                            placeholder="New Task">
-
-                        <ol class="list-group">
-                            <li v-if="todos.length === 0"
-                                class="list-group-item">Inserisci la tua prima
-                                cosa da fare</li>
+                        <input type="text" v-model="newTodo"
+                            @keyup.enter="addTodo">
+                        <button @click="addTodo">Aggiungi</button>
+                        <p v-if="error">{{ error }}</p>
+                        <!-- Start <ul> -->
+                        <ul>
                             <li v-for="(todo, index) in todos"
-                                class="list-group-item">
-                                <span
-                                    v-bind:style="{ 'text-decoration': todo.done ? 'line-through' : 'none' }">
-                                    {{ todo.text }}
-                                </span>
-                                - {{ todo.done ? 'Fatto' : 'Non fatto' }}
-                                <button @click="toggleDone(index)"
-                                    class="btn-close"></button>
-
+                                :key="index">
+                                <span :class="{ 'done': todo.done }">{{
+                                    todo.text }}</span>
+                                <div class="check_x">
+                                    <input type="checkbox" v-model="todo.done">
+                                    <button class="btn"
+                                        @click="removeTodo(index)">X</button>
+                                </div>
                             </li>
-                        </ol>
+                        </ul>
+                        <!-- End <ul> -->
                     </div>
                 </div>
             </div>

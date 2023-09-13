@@ -13,8 +13,9 @@ Visualizzare a fianco ad ogni item ha una “x”: cliccando su di essa, il todo
 MILESTONE 3 
 Predisporre un campo di input testuale e un pulsante “aggiungi”: cliccando sul pulsante, il testo digitato viene letto e utilizzato per creare un nuovo todo, che quindi viene aggiunto alla lista dei todo esistenti.
 
-Bonus: 1
-- oltre al click sul pulsante, intercettare anche il tasto ENTER per aggiungere il todo alla lista 2- cliccando sul testo dell’item, invertire il valore della proprietà done del todo corrispondente (se done era uguale a false, impostare true e viceversa) */
+Bonus: 
+1- oltre al click sul pulsante, intercettare anche il tasto ENTER per aggiungere il todo alla lista 
+2- cliccando sul testo dell’item, invertire il valore della proprietà done del todo corrispondente (se done era uguale a false, impostare true e viceversa) */
 
 // Importa il metodo createApp da Vue.js
 const { createApp } = Vue
@@ -25,33 +26,59 @@ createApp({
     data() {
 
         return {
-            // L'oggetto newTodo e' il nuovo compito da aggiungere alla lista
-            newTodo: { text: '', done: false },
 
-            // L'array todos contiene tutti i compiti
-            todos: ['Fare la spesa', 'Lavare i panni', 'Preparare la cena', 'Studiare', 'Andare a dormire presto']
+            // L'array todos contiene  i compiti
+            todos: [
+                { 
+                    text: 'Fare la spesa', 
+                    done: '', 
+                },
+                { 
+                    text:  'Lavare i panni', 
+                    done: '', 
+                },
+                { 
+                    text: 'Preparare la cena', 
+                    done: '', 
+                },
+                {  
+                    text: 'Studiare',
+                    done: '', 
+                },
+                ],
+
+                newTodo: '', // Il nuovo compito da aggiungere
+                error: '' // Il messaggio di errore da mostrare
         }
-    },
-    methods: {
-        // Il metodo addTodo aggiunge il nuovo compito all'array todos
-        addTodo() {
-
-            // Controlla se il testo del nuovo compito non è vuoto
-            if (this.newTodo.text.trim()) {
-
-                // Aggiunge una copia dell'oggetto newTodo all'array todos
-                this.todos.push(Object.assign({}, this.newTodo));
-
-                // Svuota il campo di input
-                this.newTodo.text = '';
-            }
         },
+        methods: {
+            addTodo() { // Aggiunge un nuovo compito
+              if (!this.newTodo) { // Se il campo di input è vuoto, mostra un messaggio di errore
+                this.error = 'Il campo non può essere vuoto.';
 
-        // Il metodo toggleDone cambia il valore di done per il compito all'indice specificato
-        toggleDone(index) {
-            this.todos[index].done = !this.todos[index].done;
-        }
-    }
+              } else {
+                // Cerca un compito esistente con lo stesso testo
+                const existingTodo = this.todos.find(todo => todo.text === this.newTodo);
 
+                // Se il compito esiste, imposta il suo stato a "fatto"
+                if (existingTodo) {
+                    existingTodo.done = true;
+                    this.newTodo = '';
+                    this.error = '';
+
+                } else {
+                    // Altrimenti, aggiunge un nuovo compito
+                    this.todos.push({ text: this.newTodo, done: false });
+                    this.newTodo = '';
+                    this.error = '';
+                }
+            }
+            },
+            // Rimuove un compito
+            removeTodo(index) {
+              this.todos.splice(index, 1);
+            }
+          }
+        
 }).mount('#app');  // Monta l'app su un elemento con id 'app'
-    
+

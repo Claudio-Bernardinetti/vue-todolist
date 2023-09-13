@@ -16,10 +16,21 @@
 }
 
 li {
-    
+    display: flex;
+    justify-content: space-between;
+    background-color: aliceblue;
     width: 80%;
     margin-left: 10%;
     margin-top: 1rem;
-    margin-bottom: -1rem;
+    border-radius: 5px;
 }
 
+.done {
+    text-decoration: line-through;
+  }
+
+  p {
+    color: red;
+  }
+
+  
