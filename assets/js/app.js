@@ -63,12 +63,12 @@ createApp({
                 // Se il compito esiste, imposta il suo stato a "fatto"
                 if (existingTodo) {
                     existingTodo.done = true;
-                    this.newTodo = '';
+                    // this.newTodo = '';
                     this.error = '';
 
                 } else {
                     // Altrimenti, aggiunge un nuovo compito
-                    this.todos.push({ text: this.newTodo, done: false });
+                    this.todos.unshift({ text: this.newTodo, done: false });
                     this.newTodo = '';
                     this.error = '';
                 }

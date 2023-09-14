@@ -34,12 +34,13 @@
                         <ul>
                             <li v-for="(todo, index) in todos"
                                 :key="index">
-                                <span :class="{ 'done': todo.done }">{{
-                                    todo.text }}</span>
+                                <div :class="{ 'done': todo.done }">{{
+                                    todo.text }}</div>
                                 <div class="check_x">
                                     <input type="checkbox" v-model="todo.done">
                                     <button class="btn-close-white"
-                                        @click="removeTodo(index)">X</button>
+                                        @click="removeTodo(index)"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
                             </li>
                         </ul>
